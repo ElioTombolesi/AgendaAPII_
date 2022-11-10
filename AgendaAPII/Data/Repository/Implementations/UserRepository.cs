@@ -48,7 +48,6 @@ namespace AgendaAPII.Data.Repository.Implementations
         {
 
             return await _context.Users.ToListAsync();
-
         }
 
         public async Task<User> GetOneById(int id)

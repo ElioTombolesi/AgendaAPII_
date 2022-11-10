@@ -6,7 +6,7 @@ namespace AgendaAPII.Models.DTO
     {   
         public int? Id { get; set; }
         public string Name { get; set; }
-        public List<Dispositivo> Dispositivos { get; set; }
+        public List<DispositivoDTO> Dispositivos { get; set; }
         public int UserId { get; set; }
     }
 }
