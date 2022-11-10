@@ -7,6 +7,7 @@ namespace AgendaAPII
     {
         public DbSet<User> Users { get; set; }//tablas
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Dispositivo> Dispositivos { get; set; }
 
         public AgendaContext (DbContextOptions<AgendaContext> options): base(options) // constructor
         {
