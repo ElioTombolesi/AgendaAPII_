@@ -29,8 +29,7 @@ namespace AgendaAPII.Data.Repository.Implementations
 
             
             contactEdit.Name = contact.Name;
-            contactEdit.TelephoneNumber = contact.TelephoneNumber;
-            contactEdit.CelularNumber = contact.CelularNumber;
+            contactEdit.Dispositivos = contact.Dispositivos;
             contactEdit.UserId = contact.Id;
 
 

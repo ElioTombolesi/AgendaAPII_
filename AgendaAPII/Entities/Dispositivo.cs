@@ -18,6 +18,6 @@ namespace AgendaAPII.Entities
         public string? Description { get; set; }
 
         public Types Type { get; set; } 
-
+        
     }
 }
