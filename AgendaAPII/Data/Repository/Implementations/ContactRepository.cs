@@ -38,8 +38,11 @@ namespace AgendaAPII.Data.Repository.Implementations
         }
 
         public async Task<List<Contact>> GetAllContacts()
+
         {
-            return await _context.Contacts.ToListAsync();
+            return await _context.Contacts.Include(x => x.Dispositivos).ToListAsync();
+            
+
         }
 
 

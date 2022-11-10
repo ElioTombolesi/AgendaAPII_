@@ -9,7 +9,7 @@ namespace AgendaAPII.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         public int ContactId { get; set; }
         [ForeignKey("ContactId")]

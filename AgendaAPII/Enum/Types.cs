@@ -2,9 +2,9 @@
 {
     public enum Types
     {
-        CelularNumber,
-        PhoneNumber,
-        Fax
+        CelularNumber = 0,
+        PhoneNumber = 1 ,
+        Fax = 2
 
     }
 }
