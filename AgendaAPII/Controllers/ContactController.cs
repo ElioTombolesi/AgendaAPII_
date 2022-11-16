@@ -2,9 +2,7 @@
 using AgendaAPII.Entities;
 using AgendaAPII.Models.DTO;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AgendaAPII.Controllers
 {
@@ -12,12 +10,12 @@ namespace AgendaAPII.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        
+
         private readonly IMapper _mapper;
         private readonly IContactRepository _contactRepository;
         public ContactController(IContactRepository contactRepository, IMapper mapper)
         {
-            
+
             _mapper = mapper;
             _contactRepository = contactRepository;
 
@@ -33,8 +31,8 @@ namespace AgendaAPII.Controllers
                 var Listcontact = await _contactRepository.GetAllContacts();
                 var ListcontactsDTO = _mapper.Map<IEnumerable<ContactDTO>>(Listcontact);
 
-                return  Ok(ListcontactsDTO);
-        
+                return Ok(ListcontactsDTO);
+
 
             }
             catch (Exception ex)
@@ -85,10 +83,10 @@ namespace AgendaAPII.Controllers
                     return NotFound();
                 }
 
-                await _contactRepository.DeleteContact(contact); 
-                
+                await _contactRepository.DeleteContact(contact);
+
                 return NoContent();
-               
+
             }
             catch (Exception ex)
 
@@ -109,16 +107,14 @@ namespace AgendaAPII.Controllers
 
                 var contactt = await _contactRepository.NewContact(contact);
 
-                return  Ok();
+                return Ok();
 
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditContact(int id, ContactDTO contactDTO)
@@ -148,16 +144,15 @@ namespace AgendaAPII.Controllers
 
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
-
-
-
         }
-
-
+       
 
     }
-
 }
+
+
+
+
+
