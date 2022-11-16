@@ -62,7 +62,6 @@ namespace AgendaAPII.Data.Repository.Implementations
             return contact;
         }
 
-
-
+        
     }
 }

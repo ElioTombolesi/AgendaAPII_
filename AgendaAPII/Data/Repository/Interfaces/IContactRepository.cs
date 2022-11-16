@@ -14,6 +14,8 @@ namespace AgendaAPII.Data.Repository.Interfaces
         Task <Contact> NewContact(Contact contact);
 
         Task EditContact(Contact contact);
+
+        
     }
 
 

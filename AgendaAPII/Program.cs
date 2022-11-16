@@ -25,6 +25,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 //Add Services
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IDispositivoRepository, DispositivoRepository>();
 
 
 var app = builder.Build();
