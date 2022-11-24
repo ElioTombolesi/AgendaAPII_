@@ -1,5 +1,6 @@
 ﻿using AgendaAPII.Data.Repository.Interfaces;
 using AgendaAPII.Entities;
+using AgendaAPII.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaAPII.Data.Repository.Implementations
@@ -63,6 +64,10 @@ namespace AgendaAPII.Data.Repository.Implementations
             return user;
         }
 
+        public User? ValidateUser(AuthenticationRequestBody authRequestBody)
+        {
+            return _context.Users.FirstOrDefault(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
+        }
 
     }
 }
