@@ -2,12 +2,15 @@
 using AgendaAPII.Entities;
 using AgendaAPII.Models.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaAPII.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class ContactController : ControllerBase
     {
 
@@ -48,7 +51,7 @@ namespace AgendaAPII.Controllers
 
         public async Task<IActionResult> GetOneById(int id)
         {
-
+            var nombre = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value; 
             try
             {
                 var contact = await _contactRepository.GetOneById(id);
@@ -147,7 +150,7 @@ namespace AgendaAPII.Controllers
                 return BadRequest(ex.Message);
             }
         }
-       
+
 
     }
 }

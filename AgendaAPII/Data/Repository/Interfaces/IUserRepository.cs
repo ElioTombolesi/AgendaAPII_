@@ -1,4 +1,5 @@
 ﻿using AgendaAPII.Entities;
+using AgendaAPII.Models.DTO;
 
 namespace AgendaAPII.Data.Repository.Interfaces
 {
@@ -13,5 +14,6 @@ namespace AgendaAPII.Data.Repository.Interfaces
         Task<User> NewUser(User user);
 
         Task EditUser(User user);
+        public User? ValidateUser(AuthenticationRequestBody authRequestBody);
     }
 }
