@@ -2,6 +2,7 @@
 using AgendaAPII.Entities;
 using AgendaAPII.Models.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,8 @@ namespace AgendaAPII.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class DispositivoController : ControllerBase
     {
         private readonly IMapper _mapper;

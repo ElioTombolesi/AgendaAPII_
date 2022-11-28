@@ -26,42 +26,40 @@ namespace AgendaAPII.Controllers
         }
 
         [HttpGet]
-
         public async Task<IActionResult> GetAllContacts()
         {
             try
             {
-                var Listcontact = await _contactRepository.GetAllContacts();
+                int UserId =Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+                var Listcontact = await _contactRepository.GetAllContacts(UserId);
                 var ListcontactsDTO = _mapper.Map<IEnumerable<ContactDTO>>(Listcontact);
-
                 return Ok(ListcontactsDTO);
-
-
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
-
         }
 
-
         [HttpGet("{id}")]
-
         public async Task<IActionResult> GetOneById(int id)
         {
-            var nombre = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value; 
             try
             {
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+
                 var contact = await _contactRepository.GetOneById(id);
 
                 if (contact == null)
                 {
                     return NotFound();
                 }
-                var contactsDTO = _mapper.Map<ContactDTO>(contact);
-                return Ok(contactsDTO);
+                if (contact.UserId == UserId)
+                {
+                    var contactsDTO = _mapper.Map<ContactDTO>(contact);
+                    return Ok(contactsDTO);
+                }
+                return NotFound();
 
 
             }
@@ -79,16 +77,23 @@ namespace AgendaAPII.Controllers
         {
             try
             {
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+
                 var contact = await _contactRepository.GetOneById(id);
 
                 if (contact == null)
                 {
                     return NotFound();
                 }
+                if (contact.UserId == UserId)
+                {
+                    await _contactRepository.DeleteContact(contact);
 
-                await _contactRepository.DeleteContact(contact);
+                    return NoContent();
+                }
 
-                return NoContent();
+
+                return NotFound();
 
             }
             catch (Exception ex)
@@ -120,13 +125,15 @@ namespace AgendaAPII.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditContact(int id, ContactDTO contactDTO)
+        public async Task<IActionResult> EditContact(int id, ContactDTO ContactForEditDTO)
         {
             try
             {
-                var contact = _mapper.Map<Contact>(contactDTO);
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
-                if (id != contact.Id)
+                var contact = _mapper.Map<Contact>(ContactForEditDTO);
+
+                if (id != contact.Id || contact.UserId != UserId)
                 {
                     return BadRequest();
                 }

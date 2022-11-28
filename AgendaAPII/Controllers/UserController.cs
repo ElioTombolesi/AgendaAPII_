@@ -2,6 +2,7 @@
 using AgendaAPII.Entities;
 using AgendaAPII.Models.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,8 @@ namespace AgendaAPII.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class UserController : ControllerBase
     {
 
@@ -35,7 +38,7 @@ namespace AgendaAPII.Controllers
             try
             {
                 var Listuser = await _userRepository.GetAllUsers();
-                var ListuserDTO = _mapper.Map<IEnumerable<UserDTO>>(Listuser);
+                var ListuserDTO = _mapper.Map<IEnumerable<GetUserDTO>>(Listuser);
 
                 return Ok(ListuserDTO);
 
@@ -53,7 +56,6 @@ namespace AgendaAPII.Controllers
 
         public async Task<IActionResult> GetOneById(int id)
         {
-
             try
             {
                 var user = await _userRepository.GetOneById(id);
@@ -62,9 +64,8 @@ namespace AgendaAPII.Controllers
                 {
                     return NotFound();
                 }
-                var userDTO = _mapper.Map<ContactDTO>(user);
+                var userDTO = _mapper.Map<GetUserDTO>(user);
                 return Ok(userDTO);
-
 
             }
             catch (Exception ex)
