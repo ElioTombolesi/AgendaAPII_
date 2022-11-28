@@ -10,8 +10,11 @@ namespace AgendaAPII.Profiles
 
         public ContactProfile()
         {
+            CreateMap<Contact, ContactForEditDTO>();
+            CreateMap<ContactForEditDTO, Contact>();
             CreateMap<Contact, ContactDTO>();
             CreateMap<ContactDTO, Contact>();
+            
 
         }
     }

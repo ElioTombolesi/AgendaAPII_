@@ -1,5 +1,6 @@
 ﻿using AgendaAPII.Data.Repository.Interfaces;
 using AgendaAPII.Entities;
+using AgendaAPII.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaAPII.Data.Repository.Implementations
@@ -30,18 +31,19 @@ namespace AgendaAPII.Data.Repository.Implementations
             
             contactEdit.Name = contact.Name;
             contactEdit.Dispositivos = contact.Dispositivos;
-            contactEdit.UserId = contact.Id;
+           
 
 
             await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<List<Contact>> GetAllContacts()
+        public async Task<List<Contact>> GetAllContacts(int id)
 
         {
-            return await _context.Contacts.Include(x => x.Dispositivos).ToListAsync();
-            
+
+            return await _context.Contacts.Include(x => x.Dispositivos).Where(x => x.User.Id == id).ToListAsync();
+
 
         }
 
@@ -52,7 +54,8 @@ namespace AgendaAPII.Data.Repository.Implementations
 
             return await _context.Contacts.FindAsync(id);
 
-            
+
+
         }
 
         public async Task<Contact> NewContact(Contact contact)

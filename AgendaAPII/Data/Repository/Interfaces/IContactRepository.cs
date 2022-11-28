@@ -5,7 +5,7 @@ namespace AgendaAPII.Data.Repository.Interfaces
     public interface IContactRepository
     {
 
-        Task<List<Contact>> GetAllContacts();
+         Task<List<Contact>> GetAllContacts(int UserId);
 
         Task<Contact> GetOneById(int id);
 
