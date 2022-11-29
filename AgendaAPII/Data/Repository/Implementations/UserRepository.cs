@@ -1,6 +1,7 @@
 ﻿using AgendaAPII.Data.Repository.Interfaces;
 using AgendaAPII.Entities;
 using AgendaAPII.Models.DTO;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaAPII.Data.Repository.Implementations
@@ -10,10 +11,13 @@ namespace AgendaAPII.Data.Repository.Implementations
     {
 
         private readonly AgendaContext _context;
+        private readonly IMapper _mapper;
 
-        public UserRepository(AgendaContext context)
+        public UserRepository(AgendaContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+
         }
         public async Task DeleteUser(User user)
         {
@@ -21,28 +25,19 @@ namespace AgendaAPII.Data.Repository.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditUser(User user)
+        public async Task EditUser(UserDTO userdto)
         {
-            var userEdit = await _context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
 
-            if (userEdit != null)
-            {
-
-
-                userEdit.Name = user.Name;
-                userEdit.LastName = user.LastName;
-                userEdit.Password = user.Password;
-                userEdit.Email = user.Email;
-                userEdit.UserName = user.UserName;
+            var user = _mapper.Map<User>(userdto);
+            _context.Users.Update(user);
+                    
+               await _context.SaveChangesAsync();
 
 
 
-                await _context.SaveChangesAsync();
 
-                
 
-            }
-            
+
         }
 
         public async Task<List<User>> GetAllUsers()

@@ -3,7 +3,6 @@ using AgendaAPII.Entities;
 using AgendaAPII.Models.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaAPII.Controllers
@@ -18,15 +17,15 @@ namespace AgendaAPII.Controllers
 
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-    
-
-        public  UserController(IMapper mapper, IUserRepository userRepository )
-            {
-                 _mapper = mapper ;
-                 _userRepository = userRepository;
 
 
-       
+        public UserController(IMapper mapper, IUserRepository userRepository)
+        {
+            _mapper = mapper;
+            _userRepository = userRepository;
+
+
+
         }
 
 
@@ -111,7 +110,7 @@ namespace AgendaAPII.Controllers
                 var user = _mapper.Map<User>(userDTO);
 
                 var userr = await _userRepository.NewUser(user);
-                
+
                 var userItem = _mapper.Map<UserDTO>(userr);
                 return Ok();
             }
@@ -123,26 +122,22 @@ namespace AgendaAPII.Controllers
 
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditUser(int id, UserDTO userDTO)
+        [HttpPut]
+        public async Task<IActionResult> EditUser( UserDTO userdto)
         {
             try
             {
-                var user = _mapper.Map<User>(userDTO);
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
-                if (id != user.Id)
+
+                if (UserId != userdto.Id)
                 {
                     return BadRequest();
                 }
 
-                var userEdit = await _userRepository.GetOneById(id);
+                
 
-                if (userEdit == null)
-                {
-                    return NotFound();
-                }
-
-                await _userRepository.EditUser(user);
+                await _userRepository.EditUser(userdto);
 
                 return NoContent();
 
@@ -158,6 +153,7 @@ namespace AgendaAPII.Controllers
 
 
         }
+
 
     }
 
