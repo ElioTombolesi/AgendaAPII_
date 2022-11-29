@@ -13,6 +13,6 @@ namespace AgendaAPII.Models.DTO
         [Required]
         public string UserName { get; set; }
 
-        public ICollection<ContactDTO> Contacts { get; set; }
+        
     }
 }
