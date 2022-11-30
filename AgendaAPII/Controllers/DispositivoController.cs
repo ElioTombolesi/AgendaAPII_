@@ -30,6 +30,7 @@ namespace AgendaAPII.Controllers
         {
             try
             {
+                
                 var dispositivos = _mapper.Map<Dispositivo>(dispositivosDTO);
 
                 var dispositivoDTO = await _dispositivoRepository.NewDispositivo(dispositivos);
@@ -44,6 +45,95 @@ namespace AgendaAPII.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+
+        public async Task<IActionResult> GetAllDispositivo()
+        {
+            try
+            {
+                int userId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+               
+                var Listdispositivos = await _dispositivoRepository.GetAllDispositivo(userId); 
+                var ListdispositivosDTO = _mapper.Map<IEnumerable<DispositivoDTO>>(Listdispositivos);
+                return Ok(ListdispositivosDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOneById(int id)
+        {
+            try
+            {
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+
+                var dispositivo = await _dispositivoRepository.GetOneById(id); 
+                if (dispositivo == null)
+                {
+                    return NotFound();
+                }
+                if (dispositivo.Contact.UserId == UserId)
+                {
+                    var contactsDTO = _mapper.Map<ContactDTO>(dispositivo);
+                    return Ok(contactsDTO);
+                }
+                return NotFound();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<IActionResult> DeleteDeleteDispositivo(int id)
+        {
+            try
+            {
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+
+
+                var dispositivo = await _dispositivoRepository.GetOneById(id);
+                if (dispositivo == null)
+                {
+                    return NotFound();
+                }
+                if (dispositivo.Contact.UserId == UserId)
+                {
+                    await _dispositivoRepository.DeleteDispositivo(dispositivo);
+                    return NoContent();
+                }
+                return NotFound();
+                
+
+
+                
+
+            }
+            catch (Exception ex)
+
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+
+
+
 
     }
 }

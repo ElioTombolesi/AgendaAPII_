@@ -14,7 +14,7 @@ namespace AgendaAPII.Entities
         public int ContactId { get; set; }
         [ForeignKey("ContactId")]
 
-        public Contact? Contact { get; set; }
+        public Contact Contact { get; set; }
         public string? Description { get; set; }
 
         public Types Type { get; set; } 
