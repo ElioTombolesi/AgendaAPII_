@@ -9,7 +9,7 @@ namespace AgendaAPII.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
 
     public class UserController : ControllerBase
     {
@@ -31,7 +31,7 @@ namespace AgendaAPII.Controllers
 
 
         [HttpGet]
-
+        [Authorize]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -52,7 +52,7 @@ namespace AgendaAPII.Controllers
         }
 
         [HttpGet("{id}")]
-
+        [Authorize]
         public async Task<IActionResult> GetOneById(int id)
         {
             try
@@ -74,18 +74,28 @@ namespace AgendaAPII.Controllers
             }
 
         }
-        [HttpDelete("{id}")]
-
+        [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(int id)
         {
             try
             {
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+
+
+                if (UserId != id)
+                {
+                    return BadRequest();
+                }
+
+                
                 var user = await _userRepository.GetOneById(id);
 
                 if (user == null)
                 {
                     return NotFound();
                 }
+
 
                 await _userRepository.DeleteUser(user);
 
@@ -123,6 +133,7 @@ namespace AgendaAPII.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> EditUser( UserDTO userdto)
         {
             try

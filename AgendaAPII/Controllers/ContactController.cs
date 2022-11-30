@@ -111,6 +111,13 @@ namespace AgendaAPII.Controllers
         {
             try
             {
+                int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+
+                if ( contactDTO.UserId != UserId)
+                {
+                    return BadRequest();
+                }
+
                 var contact = _mapper.Map<Contact>(contactDTO);
 
                 var contactt = await _contactRepository.NewContact(contact);

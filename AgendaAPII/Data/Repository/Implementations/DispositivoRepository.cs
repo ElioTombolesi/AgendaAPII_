@@ -1,5 +1,6 @@
 ﻿using AgendaAPII.Data.Repository.Interfaces;
 using AgendaAPII.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaAPII.Data.Repository.Implementations
 {
@@ -11,6 +12,32 @@ namespace AgendaAPII.Data.Repository.Implementations
         {
             _context = context;
         }
+
+        public async Task DeleteDispositivo(Dispositivo dispositivo)
+        {
+            _context.Dispositivos.Remove(dispositivo);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Dispositivo> GetOneById(int id)
+        {
+
+            return await _context.Dispositivos.FindAsync(id);
+
+
+
+        }
+
+
+
+        public async Task<List<Dispositivo>> GetAllDispositivo(int UserId)
+
+        {
+            
+            return await _context.Dispositivos.Where(x => x.Contact.UserId == UserId).ToListAsync();
+
+        }
+
         public async Task<Dispositivo> NewDispositivo(Dispositivo dispositivos)
         {
             _context.Add(dispositivos);
