@@ -22,7 +22,7 @@ namespace AgendaAPII.Data.Repository.Implementations
         public async Task<Dispositivo> GetOneById(int id)
         {
 
-            return await _context.Dispositivos.FindAsync(id);
+            return await _context.Dispositivos.Where(x => x.Id == id).Include(x => x.Contact).FirstOrDefaultAsync();
 
 
 
