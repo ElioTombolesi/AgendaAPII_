@@ -80,8 +80,8 @@ namespace AgendaAPII.Controllers
                 }
                 if (dispositivo.Contact.UserId == UserId)
                 {
-                    var contactsDTO = _mapper.Map<ContactDTO>(dispositivo);
-                    return Ok(contactsDTO);
+                    var DispositivoDTO = _mapper.Map<DispositivoDTO>(dispositivo);
+                    return Ok(DispositivoDTO);
                 }
                 return NotFound();
 
