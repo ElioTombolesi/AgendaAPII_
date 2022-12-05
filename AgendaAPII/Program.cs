@@ -78,7 +78,7 @@ builder.Services.AddDbContext<AgendaContext>(options =>
 });
 
 //automapper
-builder.Services.AddAutoMapper(typeof(Program)));
+builder.Services.AddAutoMapper(typeof(Program));
 
 //Add Services
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
