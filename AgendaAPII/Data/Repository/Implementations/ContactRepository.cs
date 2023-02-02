@@ -49,10 +49,10 @@ namespace AgendaAPII.Data.Repository.Implementations
 
 
 
-        public async Task<Contact> GetOneById(int id)
+        public async Task<Contact?> GetOneById(int id)
         {
 
-            return await _context.Contacts.FindAsync(id);
+            return await _context.Contacts.Include(x => x.Dispositivos).FirstOrDefaultAsync(x => x.Id == id);
 
 
 

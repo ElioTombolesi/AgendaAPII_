@@ -14,6 +14,8 @@ namespace AgendaAPII.Profiles
             CreateMap<ContactForEditDTO, Contact>();
             CreateMap<Contact, ContactDTO>();
             CreateMap<ContactDTO, Contact>();
+            CreateMap<Contact, ContactForCreationDTO>();
+            CreateMap<ContactForCreationDTO, Contact>();
             
 
         }

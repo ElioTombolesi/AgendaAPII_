@@ -31,7 +31,7 @@ namespace AgendaAPII.Controllers
             try
             {
                 int UserId =Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-                var Listcontact = await _contactRepository.GetAllContacts(UserId);
+                var Listcontact = await _contactRepository.GetAllContacts(UserId); 
                 var ListcontactsDTO = _mapper.Map<IEnumerable<ContactDTO>>(Listcontact);
                 return Ok(ListcontactsDTO);
             }
@@ -107,18 +107,18 @@ namespace AgendaAPII.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> NewContact(ContactDTO contactDTO)
+        public async Task<IActionResult> NewContact(ContactForCreationDTO ContactForCreationDTO)
         {
             try
             {
                 int UserId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
-                if ( contactDTO.UserId != UserId)
+                if (ContactForCreationDTO.UserId != UserId)
                 {
                     return BadRequest();
                 }
 
-                var contact = _mapper.Map<Contact>(contactDTO);
+                var contact = _mapper.Map<Contact>(ContactForCreationDTO);
 
                 var contactt = await _contactRepository.NewContact(contact);
 
