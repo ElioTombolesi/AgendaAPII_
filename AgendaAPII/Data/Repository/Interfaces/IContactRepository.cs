@@ -7,7 +7,7 @@ namespace AgendaAPII.Data.Repository.Interfaces
 
          Task<List<Contact>> GetAllContacts(int UserId);
 
-        Task<Contact> GetOneById(int id);
+        Task<Contact?> GetOneById(int id);
 
         Task DeleteContact(Contact contact);
 

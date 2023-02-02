@@ -12,6 +12,8 @@ namespace AgendaAPII.Profiles
 
             CreateMap<Dispositivo, DispositivoDTO>();
             CreateMap<DispositivoDTO, Dispositivo>();
+            CreateMap<Dispositivo, DispositiveForCreationDTO>();
+            CreateMap<DispositiveForCreationDTO, Dispositivo>();
         }
 
 
